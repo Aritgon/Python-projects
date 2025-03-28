@@ -25,7 +25,6 @@ class shop:
         valid_gender = ["men", "women", "unisex"]
         if gender_choice not in valid_gender:
             print(f"Invalid input. Choose from {valid_gender}.")
-            # return
         
         filtered_shoes = list(filter(lambda items: items['gender'].lower() == gender_choice, self.shoe_data))
         
@@ -44,19 +43,19 @@ class shop:
         idchoice = int(input("Enter the ID of the shoe: "))
         sizechoice = int(input("Enter the size of the shoe: "))
 
-        # local variables that can come in handy.
+        # local scopes for temporarily store data.
         temp_price = 0
         temp_shoe = []
 
-        # global flags.
+        # flags.
         shoe_found = False
         size_found = False
 
-        # loops.
+
         for id in self.shoe_data:
             if idchoice == id['shoe_id']:
                 shoe_found = True # changing the flags.
-                temp_price += id['price']
+                temp_price += id['price'] # storing the price of the shoe temporarily.
 
                 # storing the shoe in an temp list.
                 if sizechoice in id['sizes']:
@@ -73,27 +72,27 @@ class shop:
                     
                     # sum of total price.
                     self.total_price += temp_price
-                    # adding this temporary shoe list to the main total_order list.
+                    # extending the main list.
                     self.total_order.extend(temp_shoe)
                     break
             
         if not shoe_found or not size_found:
             print("Item isn't available at the moment.")
 
-    # remove an item from the list function.
+    # remove function.
     def removeitem(self, shoe_id):
-        shoe_found = False # flag.
+        shoe_found = False # def flag.
 
         for shoe in self.total_order:
             if shoe_id == shoe['shoe_id']:
                 shoe_found = True # changing the flag.
-                self.total_order.remove(shoe)
+                self.total_order.remove(shoe) # removing the whole item.
                 break
 
         # if the shoe_id is not found.
         if not shoe_found:
             return False
-        
+
         return True
 
     # view cart function.
@@ -112,7 +111,7 @@ class shop:
         # removing item if necessary.
         while True:
             remove_choice = input("Do you want to remove any item (y to yes q to exit): ").lower()
-            # setting up local scope.
+            # up local scope.
             temp_price = 0
         
             if remove_choice == 'q':
@@ -125,8 +124,8 @@ class shop:
                     print()
 
                 print(f"Total Bill (in rupees): {self.total_price} /-")                
-                print("-" * 40)
                 print("Thank you for shopping with us! 🙏")
+                print("-" * 40)
                 break
 
             elif remove_choice == 'y':
@@ -137,7 +136,7 @@ class shop:
 
                         # calling the functions.
                         self.removeitem(shoes)
-                        temp_price += shoes['price'] # storing the item temporarily.
+                        temp_price += shoes['price'] # storing the price temporarily.
                         print(f"you've removed {shoe_id}, {shoes['shoe_name']} from your cart 🛒")
                         print()
                     
